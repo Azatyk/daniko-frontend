@@ -1,28 +1,49 @@
 <template>
   <section class="reviews">
     <h2 class="reviews-title">Отзывы наших клиентов</h2>
-    <div class="swiper-container">
-      <i class="swiper-button bx bx-chevron-left"></i>
-      <div class="swiper">
-        <div class="slide" v-for="(review, index) in reviews" :key="index">
+    <div v-swiper="swiperOption" class="swiper-container">
+      <i
+        class="swiper-button bx bx-chevron-left swiper-button-prev"
+        slot="button-prev"
+      ></i>
+      <div class="swiper-wrapper swiper">
+        <div
+          class="swiper-slide"
+          v-for="(review, index) in reviews"
+          :key="index"
+        >
           <p class="slide-text">
             {{ review.review }}
           </p>
           <span class="slide-author">{{ review.author }}</span>
         </div>
       </div>
-      <i class="swiper-button bx bx-chevron-right"></i>
+      <i
+        class="swiper-button bx bx-chevron-right swiper-button-next"
+        slot="button-next"
+      ></i>
     </div>
   </section>
 </template>
 
 <script>
 import reviews from '@/data/reviews.js'
+import { directive } from 'vue-awesome-swiper'
 
 export default {
+  directives: {
+    swiper: directive,
+  },
   data() {
     return {
       reviews: reviews,
+      swiperOption: {
+        slidesPerView: 1,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      },
     }
   },
 }
@@ -45,11 +66,8 @@ export default {
 }
 
 .swiper {
-  width: 100% !important;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
   &-container {
     width: 600px;
     display: flex;
@@ -71,8 +89,8 @@ export default {
   }
 }
 
-.slide {
-  width: 100% !important;
+.swiper-slide {
+  width: 600px !important;
   display: flex;
   flex-direction: column;
   align-items: center;
